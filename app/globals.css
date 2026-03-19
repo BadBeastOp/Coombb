@@ -26,26 +26,22 @@ body {
   min-height: 100vh;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: #F5F0E8; }
 ::-webkit-scrollbar-thumb { background: #8C8C8C; }
 ::-webkit-scrollbar-thumb:hover { background: #1A1A1A; }
 
-/* Hide scrollbar utility */
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-
-/* ⚠️ DO NOT add a blanket img transition here — it breaks hover image swap */
-
 ::selection { background: #1A1A1A; color: #F5F0E8; }
 :focus-visible { outline: 1px solid #1A1A1A; outline-offset: 2px; }
 
-.tracking-editorial { letter-spacing: 0.2em; }
-.tracking-widest-2  { letter-spacing: 0.3em; }
-
 .font-display { font-family: var(--font-display); }
 .font-body    { font-family: var(--font-body); }
+
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+.tracking-editorial { letter-spacing: 0.2em; }
+.tracking-widest-2  { letter-spacing: 0.3em; }
 
 .hover-underline { position: relative; display: inline-block; }
 .hover-underline::after {
@@ -62,4 +58,5 @@ body {
 
 .page-content { min-height: calc(100vh - 88px); }
 .cursor-zoom-in { cursor: zoom-in; }
+
 select { -webkit-appearance: none; appearance: none; }
