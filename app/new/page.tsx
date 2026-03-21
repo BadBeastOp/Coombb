@@ -1,7 +1,13 @@
-import { getProductsByCategory } from "@/lib/data";
-import ProductGrid from "@/components/product/ProductGrid";
+import NewInPage from "@/components/new-in/NewInPage";
 import Footer from "@/components/layout/Footer";
-export const metadata = { title: "New In — MAISON" };
+
+export const metadata = { title: "Women's New In — MAISON" };
+
 export default function NewPage() {
-  return (<><ProductGrid products={getProductsByCategory("new")} title="New In" /><Footer /></>);
+  return (
+    <>
+      <NewInPage />
+      <Footer />
+    </>
+  );
 }

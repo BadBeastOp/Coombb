@@ -1,7 +1,27 @@
-import { getProductsByCategory } from "@/lib/data";
-import ProductGrid from "@/components/product/ProductGrid";
+import MenHero from "@/components/men/MenHero";
+import MenCategoryGrid from "@/components/men/MenCategoryGrid";
+import MenPromoBanner from "@/components/men/MenPromoBanner";
+import MenCollections from "@/components/men/MenCollections";
+import MenArrivals from "@/components/men/MenArrivals";
+import MenEditorialBanners from "@/components/men/MenEditorialBanners";
+import MenBestsellers from "@/components/men/MenBestsellers";
+import MenNewsletter from "@/components/men/MenNewsletter";
 import Footer from "@/components/layout/Footer";
-export const metadata = { title: "Men — MAISON" };
+
+export const metadata = { title: "Menswear — MAISON" };
+
 export default function MenPage() {
-  return (<><ProductGrid products={getProductsByCategory("men")} title="Men" /><Footer /></>);
+  return (
+    <>
+      <MenHero />
+      <MenCategoryGrid />
+      <MenPromoBanner />
+      <MenCollections />
+      <MenArrivals />
+      <MenEditorialBanners />
+      <MenBestsellers />
+      <MenNewsletter />
+      <Footer />
+    </>
+  );
 }

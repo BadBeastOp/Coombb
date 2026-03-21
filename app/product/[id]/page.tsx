@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getProductById, getRelatedProducts } from "@/lib/data";
-import ProductDetail from "@/components/product/ProductDetail";
+import ProductDetailPage from "@/components/product-detail/ProductDetailPage";
 import Footer from "@/components/layout/Footer";
 
 type Props = { params: { id: string } };
@@ -14,10 +14,10 @@ export async function generateMetadata({ params }: Props) {
 export default function ProductPage({ params }: Props) {
   const product = getProductById(params.id);
   if (!product) notFound();
-  const related = getRelatedProducts(product);
+  const related = getRelatedProducts(product!, 8);
   return (
     <>
-      <ProductDetail product={product} related={related} />
+      <ProductDetailPage product={product!} related={related} />
       <Footer />
     </>
   );

@@ -34,7 +34,7 @@ const SLIDES = [
   },
   {
     id: 3,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1800&q=90",
+    image: "https://tse4.mm.bing.net/th/id/OIP.nZWnWRmhUDAlDNo1ZRkBigHaDl?rs=1&pid=ImgDetMain&o=7&rm=3",
     tag: "SMART CASUAL",
     headline: "REFINED",
     sub: "CLASSICS",

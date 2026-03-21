@@ -4,276 +4,431 @@ export type Product = {
   price: number;
   originalPrice?: number;
   category: string;
-  subcategory: string;
-  colors: { name: string; hex: string; image?: string }[];
-  sizes: string[];
-  images: string[];
   description: string;
+  images: string[];
+  colors: { name: string; hex: string }[];
+  sizes: string[];
   details: string[];
+  tags: string[];
   isNew?: boolean;
   isSale?: boolean;
-  tags: string[];
 };
 
 export const products: Product[] = [
   {
     id: "p001",
-    name: "STRUCTURED WOOL BLAZER",
-    price: 249,
+    name: "Oversized Longline Blazer",
+    price: 45,
     category: "women",
-    subcategory: "jackets",
+    description: "A sleek oversized blazer crafted in a luxe woven fabric. Features a longline silhouette, notched lapels and a relaxed fit. Perfect for smart-casual styling.",
+    images: [
+      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=85",
+      "https://images.unsplash.com/photo-1548624313-0396c75e4b1a?w=800&q=85",
+      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&q=85",
+    ],
     colors: [
-      { name: "Ivory", hex: "#F5F0E8" },
-      { name: "Charcoal", hex: "#2D2D2D" },
-      { name: "Camel", hex: "#C19A6B" },
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Camel", hex: "#C8A882" },
+      { name: "Cream", hex: "#F5F0E8" },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
-    images: [
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
-      "https://images.unsplash.com/photo-1548624313-0396c75e4b1a?w=800&q=80",
+    details: [
+      "Oversized longline fit",
+      "Notched lapel collar",
+      "Single button fastening",
+      "Side welt pockets",
+      "Fully lined",
+      "Model wears size S",
+      "Model height: 5ft 9in/175cm",
     ],
-    description: "A masterfully tailored wool blazer that defines modern elegance. Cut from premium Italian wool with a structured silhouette that transitions effortlessly from day to evening.",
-    details: ["100% Merino Wool", "Fully lined", "Notched lapels", "Two-button closure", "Dry clean only"],
+    tags: ["blazer", "jacket", "smart", "workwear"],
     isNew: true,
-    tags: ["blazer", "jacket", "formal", "work"],
   },
   {
     id: "p002",
-    name: "SILK SLIP DRESS",
-    price: 189,
+    name: "Ribbed Scoop Neck Crop Top",
+    price: 12,
     category: "women",
-    subcategory: "dresses",
-    colors: [
-      { name: "Ecru", hex: "#F2EAD3" },
-      { name: "Noir", hex: "#1A1A1A" },
-      { name: "Blush", hex: "#E8B4A0" },
-    ],
-    sizes: ["XS", "S", "M", "L"],
+    description: "A wardrobe essential in a soft ribbed fabric. This crop top features a flattering scoop neckline and a fitted silhouette — perfect paired with high-waisted bottoms.",
     images: [
-      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&q=80",
-      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80",
+      "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=800&q=85",
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85",
     ],
-    description: "A fluid silk slip dress with a bias cut that moves beautifully with the body. The epitome of understated luxury.",
-    details: ["100% Silk", "Adjustable straps", "Side slit", "Hand wash cold"],
-    isNew: true,
-    tags: ["dress", "silk", "evening", "minimalist"],
-  },
-  {
-    id: "p003",
-    name: "TAILORED TROUSERS",
-    price: 149,
-    category: "women",
-    subcategory: "trousers",
     colors: [
       { name: "Cream", hex: "#F5F0E8" },
       { name: "Black", hex: "#1A1A1A" },
-      { name: "Taupe", hex: "#8E7E6A" },
+      { name: "Blush", hex: "#E8B4A0" },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
-    images: [
-      "https://images.unsplash.com/photo-1594938298603-c8148c4b4e7b?w=800&q=80",
-      "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80",
+    details: [
+      "Ribbed fabric",
+      "Scoop neckline",
+      "Cropped length",
+      "Fitted silhouette",
+      "Stretch fabric",
+      "95% Cotton, 5% Elastane",
     ],
-    description: "Impeccably cut wide-leg trousers in a premium wool blend. A wardrobe essential that defines modern power dressing.",
-    details: ["70% Wool, 30% Polyester", "High waist", "Wide leg", "Side zip", "Dry clean only"],
-    tags: ["trousers", "formal", "wide-leg"],
+    tags: ["top", "crop", "basic", "casual"],
+    isNew: true,
+  },
+  {
+    id: "p003",
+    name: "Satin Cowl Neck Slip Dress",
+    price: 28,
+    category: "women",
+    description: "A flowing satin slip dress with an elegant cowl neckline and adjustable straps. Bias cut for a flattering drape. Wear alone or layer with a blazer.",
+    images: [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&q=85",
+      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&q=85",
+      "https://images.unsplash.com/photo-1551803091-e20673f15770?w=800&q=85",
+    ],
+    colors: [
+      { name: "Blush", hex: "#E8B4A0" },
+      { name: "Champagne", hex: "#D4C5A9" },
+      { name: "Black", hex: "#1A1A1A" },
+    ],
+    sizes: ["XS", "S", "M", "L"],
+    details: [
+      "Cowl neckline",
+      "Adjustable spaghetti straps",
+      "Midi length",
+      "Bias cut",
+      "Satin fabric",
+      "100% Polyester",
+    ],
+    tags: ["dress", "satin", "slip", "evening"],
+    isNew: true,
   },
   {
     id: "p004",
-    name: "CASHMERE TURTLENECK",
-    price: 219,
-    originalPrice: 299,
+    name: "Wide Leg Tailored Trousers",
+    price: 35,
     category: "women",
-    subcategory: "knitwear",
+    description: "Effortlessly chic wide leg trousers in a smooth tailored fabric. High rise waist, pressed crease and functional pockets for an elevated everyday look.",
+    images: [
+      "https://images.unsplash.com/photo-1594938298603-c8148c4b4e7b?w=800&q=85",
+      "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=85",
+    ],
     colors: [
-      { name: "Camel", hex: "#C19A6B" },
-      { name: "Ivory", hex: "#F5F0E8" },
-      { name: "Charcoal", hex: "#444444" },
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Stone", hex: "#8C8C8C" },
+      { name: "Cream", hex: "#F5F0E8" },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
-    images: [
-      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
-      "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&q=80",
+    details: [
+      "High rise waist",
+      "Wide leg fit",
+      "Pressed centre crease",
+      "Side pockets",
+      "Zip and hook fastening",
+      "Tailored woven fabric",
     ],
-    description: "Pure cashmere turtleneck in a relaxed, oversized silhouette. Extraordinarily soft against the skin with exceptional warmth.",
-    details: ["100% Cashmere", "Relaxed fit", "Ribbed cuffs and hem", "Dry clean only"],
-    isSale: true,
-    tags: ["knitwear", "cashmere", "winter"],
+    tags: ["trousers", "tailored", "wide leg", "smart"],
+    isNew: true,
   },
   {
     id: "p005",
-    name: "OVERSIZED LINEN SHIRT",
-    price: 89,
-    category: "men",
-    subcategory: "shirts",
-    colors: [
-      { name: "White", hex: "#FFFFFF" },
-      { name: "Sand", hex: "#C8B89A" },
-      { name: "Navy", hex: "#1B2A4A" },
-    ],
-    sizes: ["S", "M", "L", "XL", "XXL"],
+    name: "Faux Leather Biker Jacket",
+    price: 55,
+    originalPrice: 75,
+    category: "women",
+    description: "A classic biker jacket in premium faux leather. Features asymmetric zip, quilted shoulder panels and silver hardware. An iconic everyday staple.",
     images: [
-      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&q=80",
-      "https://images.unsplash.com/photo-1563630423918-b58bef06b519?w=800&q=80",
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=85",
+      "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800&q=85",
     ],
-    description: "A beautifully relaxed linen shirt with an oversized silhouette. Perfect for warm days, styled open over a tee or alone.",
-    details: ["100% Linen", "Oversized fit", "Button-down front", "Machine wash cold"],
-    isNew: true,
-    tags: ["shirt", "linen", "summer", "casual"],
+    colors: [
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Brown", hex: "#6B4226" },
+    ],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    details: [
+      "Asymmetric zip fastening",
+      "Quilted shoulder panels",
+      "Silver-tone hardware",
+      "Side zip pockets",
+      "Zip cuffs",
+      "Faux leather fabric",
+    ],
+    tags: ["jacket", "biker", "leather", "edgy"],
+    isSale: true,
   },
   {
     id: "p006",
-    name: "SLIM WOOL TROUSERS",
-    price: 169,
-    category: "men",
-    subcategory: "trousers",
-    colors: [
-      { name: "Charcoal", hex: "#2D2D2D" },
-      { name: "Navy", hex: "#1B2A4A" },
-      { name: "Camel", hex: "#C19A6B" },
-    ],
-    sizes: ["28", "30", "32", "34", "36"],
+    name: "Floral Wrap Midi Dress",
+    price: 32,
+    category: "women",
+    description: "A feminine wrap midi dress in a vibrant floral print. V-neckline, tie waist belt and flowy skirt for an effortlessly put-together summer look.",
     images: [
-      "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80",
-      "https://images.unsplash.com/photo-1490551370062-751bff5f3045?w=800&q=80",
+      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&q=85",
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&q=85",
     ],
-    description: "Slim-cut trousers in a premium wool blend with a precise, modern silhouette.",
-    details: ["60% Wool, 40% Polyester", "Slim fit", "Flat front", "Dry clean only"],
-    tags: ["trousers", "formal", "wool"],
+    colors: [
+      { name: "Floral Multi", hex: "#E07070" },
+      { name: "Blue Floral", hex: "#7098C8" },
+    ],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    details: [
+      "Wrap front silhouette",
+      "V-neckline",
+      "Tie waist belt",
+      "Midi length",
+      "Floral print",
+      "100% Viscose",
+    ],
+    tags: ["dress", "floral", "wrap", "midi"],
+    isNew: true,
   },
   {
     id: "p007",
-    name: "MERINO CREWNECK",
-    price: 129,
-    originalPrice: 179,
-    category: "men",
-    subcategory: "knitwear",
-    colors: [
-      { name: "Oatmeal", hex: "#E8DCC8" },
-      { name: "Black", hex: "#1A1A1A" },
-      { name: "Forest", hex: "#2D4A3E" },
-    ],
-    sizes: ["S", "M", "L", "XL", "XXL"],
+    name: "Cashmere Blend Turtleneck",
+    price: 48,
+    category: "women",
+    description: "A luxuriously soft cashmere blend turtleneck in a relaxed but refined silhouette. Ribbed hem and cuffs, perfect for effortless elevated styling all season.",
     images: [
-      "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=800&q=80",
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=85",
+      "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&q=85",
     ],
-    description: "A refined merino wool crewneck with a classic silhouette. The perfect layering piece.",
-    details: ["100% Merino Wool", "Regular fit", "Ribbed collar, cuffs and hem", "Machine wash cold"],
-    isSale: true,
-    tags: ["knitwear", "merino", "winter"],
+    colors: [
+      { name: "Camel", hex: "#C8A882" },
+      { name: "Cream", hex: "#F5F0E8" },
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Grey", hex: "#9E9E9E" },
+    ],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    details: [
+      "Turtleneck collar",
+      "Relaxed fit",
+      "Ribbed hem and cuffs",
+      "Fine knit",
+      "70% Wool, 30% Cashmere",
+      "Dry clean only",
+    ],
+    tags: ["knitwear", "jumper", "cashmere", "luxury"],
+    isNew: true,
   },
   {
     id: "p008",
-    name: "LEATHER TOTE BAG",
-    price: 345,
-    category: "accessories",
-    subcategory: "bags",
-    colors: [
-      { name: "Tan", hex: "#C19A6B" },
-      { name: "Black", hex: "#1A1A1A" },
-      { name: "Cognac", hex: "#9B4E1A" },
-    ],
-    sizes: ["ONE SIZE"],
+    name: "Plisse Pleated Midi Skirt",
+    price: 22,
+    category: "women",
+    description: "A pleated plisse midi skirt with an elasticated waist for all-day comfort. The accordion pleats create a beautiful fluid movement when you walk.",
     images: [
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
-      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80",
+      "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800&q=85",
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85",
     ],
-    description: "A generous structured tote in full-grain vegetable-tanned leather. Ages beautifully with use.",
-    details: ["Full-grain leather", "Cotton lining", "Interior zip pocket", "Magnetic closure"],
+    colors: [
+      { name: "Sage", hex: "#8A9E7E" },
+      { name: "Blush", hex: "#E8B4A0" },
+      { name: "Black", hex: "#1A1A1A" },
+    ],
+    sizes: ["XS", "S", "M", "L"],
+    details: [
+      "Elasticated waistband",
+      "Accordion pleats",
+      "Midi length",
+      "Regular fit",
+      "100% Polyester",
+      "Machine washable",
+    ],
+    tags: ["skirt", "midi", "pleated", "smart"],
     isNew: true,
-    tags: ["bag", "leather", "tote", "accessories"],
   },
   {
     id: "p009",
-    name: "SILK SCARF",
-    price: 95,
+    name: "Structured Mini Shoulder Bag",
+    price: 35,
     category: "accessories",
-    subcategory: "scarves",
-    colors: [
-      { name: "Ivory/Gold", hex: "#F5F0E8" },
-      { name: "Black/White", hex: "#1A1A1A" },
-    ],
-    sizes: ["ONE SIZE"],
+    description: "A chic mini shoulder bag in structured faux leather. Gold chain strap, magnetic clasp closure and interior card slots. The perfect day-to-night accessory.",
     images: [
-      "https://images.unsplash.com/photo-1601924638867-3a6de6b7a500?w=800&q=80",
-      "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=800&q=80",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=85",
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=85",
     ],
-    description: "A hand-rolled silk twill scarf with an exclusive print. Wear as a neck scarf, headband, or bag accessory.",
-    details: ["100% Silk twill", "Hand-rolled edges", "90x90cm", "Dry clean only"],
-    tags: ["scarf", "silk", "accessories"],
+    colors: [
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Camel", hex: "#C8A882" },
+      { name: "White", hex: "#FFFFFF" },
+    ],
+    sizes: ["One Size"],
+    details: [
+      "Gold chain strap",
+      "Magnetic clasp closure",
+      "Interior card slots",
+      "Structured faux leather",
+      "Dimensions: 18cm x 13cm x 6cm",
+    ],
+    tags: ["bag", "shoulder", "accessories", "chain"],
+    isNew: true,
   },
   {
     id: "p010",
-    name: "MINIMALIST CHELSEA BOOTS",
-    price: 289,
-    originalPrice: 389,
+    name: "Block Heel Ankle Boots",
+    price: 65,
+    originalPrice: 85,
     category: "accessories",
-    subcategory: "shoes",
+    description: "Sleek ankle boots with a comfortable block heel and square toe. Pull-on design with side elastic panels for an easy fit. A versatile wardrobe essential.",
+    images: [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=85",
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&q=85",
+    ],
     colors: [
       { name: "Black", hex: "#1A1A1A" },
-      { name: "Tan", hex: "#C19A6B" },
+      { name: "Tan", hex: "#A0785A" },
     ],
     sizes: ["36", "37", "38", "39", "40", "41"],
-    images: [
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&q=80",
-      "https://images.unsplash.com/photo-1605812860427-4024433a70fd?w=800&q=80",
+    details: [
+      "Block heel: 6cm",
+      "Square toe",
+      "Pull-on design",
+      "Side elastic panels",
+      "Faux leather upper",
+      "Synthetic sole",
     ],
-    description: "Sleek chelsea boots in smooth calfskin leather with a subtle stacked heel. A perennial wardrobe staple.",
-    details: ["Calfskin leather upper", "Leather lining", "Stacked heel 4cm", "Rubber sole"],
+    tags: ["boots", "heels", "shoes", "ankle"],
     isSale: true,
-    tags: ["shoes", "boots", "leather", "accessories"],
   },
   {
     id: "p011",
-    name: "COTTON POPLIN MIDI DRESS",
-    price: 125,
+    name: "Satin Slip Co-ord Set",
+    price: 55,
     category: "women",
-    subcategory: "dresses",
-    colors: [
-      { name: "White", hex: "#FFFFFF" },
-      { name: "Stripe", hex: "#E8E0D0" },
-    ],
-    sizes: ["XS", "S", "M", "L", "XL"],
+    description: "A luxe satin co-ord set featuring a camisole top and wide leg trousers. Effortlessly elegant for evenings out or smart-casual dressing.",
     images: [
-      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&q=80",
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80",
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85",
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=85",
     ],
-    description: "A beautifully relaxed midi dress in crisp cotton poplin. Effortless, elegant, and eternally wearable.",
-    details: ["100% Cotton", "Midi length", "V-neck", "Machine wash cold"],
+    colors: [
+      { name: "Champagne", hex: "#D4C5A9" },
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Blush", hex: "#E8B4A0" },
+    ],
+    sizes: ["XS", "S", "M", "L"],
+    details: [
+      "Matching set",
+      "Satin fabric",
+      "Camisole top with adjustable straps",
+      "Wide leg trousers with elasticated waist",
+      "100% Polyester",
+    ],
+    tags: ["co-ord", "satin", "set", "evening"],
     isNew: true,
-    tags: ["dress", "cotton", "midi", "summer"],
   },
   {
     id: "p012",
-    name: "TAILORED OVERCOAT",
-    price: 449,
+    name: "Oversized Graphic Hoodie",
+    price: 28,
     category: "men",
-    subcategory: "coats",
-    colors: [
-      { name: "Camel", hex: "#C19A6B" },
-      { name: "Charcoal", hex: "#2D2D2D" },
-    ],
-    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "A relaxed fit graphic hoodie in a soft fleece fabric. Features a bold front graphic print, kangaroo pocket and adjustable drawstring hood.",
     images: [
-      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=800&q=80",
-      "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800&q=80",
+      "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=800&q=85",
+      "https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?w=800&q=85",
     ],
-    description: "A defining piece. This tailored overcoat in premium wool cashmere blend is cut with exceptional precision for a silhouette that commands attention.",
-    details: ["80% Wool, 20% Cashmere", "Fully lined", "Single-breasted", "Dry clean only"],
+    colors: [
+      { name: "Grey", hex: "#9E9E9E" },
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "White", hex: "#F5F5F5" },
+    ],
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    details: [
+      "Oversized fit",
+      "Graphic front print",
+      "Drawstring hood",
+      "Kangaroo pocket",
+      "Ribbed cuffs and hem",
+      "80% Cotton, 20% Polyester",
+    ],
+    tags: ["hoodie", "graphic", "casual", "streetwear"],
     isNew: true,
-    tags: ["coat", "wool", "winter", "formal"],
+  },
+  {
+    id: "p013",
+    name: "Bodycon Knit Mini Dress",
+    price: 25,
+    category: "women",
+    description: "A figure-hugging bodycon mini dress in a soft stretch knit. Scoop neck, long sleeves and a short hem for a bold going-out look.",
+    images: [
+      "https://images.unsplash.com/photo-1551803091-e20673f15770?w=800&q=85",
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&q=85",
+    ],
+    colors: [
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Camel", hex: "#C8A882" },
+      { name: "Red", hex: "#C0392B" },
+    ],
+    sizes: ["XS", "S", "M", "L"],
+    details: [
+      "Bodycon fit",
+      "Scoop neckline",
+      "Long sleeves",
+      "Mini length",
+      "Stretch knit fabric",
+      "95% Viscose, 5% Elastane",
+    ],
+    tags: ["dress", "bodycon", "knit", "party"],
+    isNew: true,
+  },
+  {
+    id: "p014",
+    name: "Longline Wool Blend Coat",
+    price: 89,
+    category: "women",
+    description: "A timeless longline coat in a premium wool blend. Double-breasted button fastening, structured shoulders and side pockets. An investment wardrobe piece.",
+    images: [
+      "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800&q=85",
+      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=800&q=85",
+    ],
+    colors: [
+      { name: "Camel", hex: "#C8A882" },
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Grey", hex: "#9E9E9E" },
+    ],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    details: [
+      "Longline silhouette",
+      "Double-breasted button fastening",
+      "Notched lapels",
+      "Structured shoulders",
+      "Side pockets",
+      "60% Wool, 40% Polyester",
+      "Fully lined",
+    ],
+    tags: ["coat", "wool", "longline", "smart"],
+    isNew: true,
+  },
+  {
+    id: "p015",
+    name: "Denim Wide Leg Jeans",
+    price: 42,
+    category: "women",
+    description: "On-trend wide leg jeans in a classic mid-wash denim. High rise fit, five pockets and a straight wide leg cut for effortless everyday styling.",
+    images: [
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=85",
+      "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?w=800&q=85",
+    ],
+    colors: [
+      { name: "Mid Wash", hex: "#5B7FA6" },
+      { name: "Black", hex: "#1A1A1A" },
+      { name: "Light Wash", hex: "#A8C0D6" },
+    ],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    details: [
+      "High rise waist",
+      "Wide leg fit",
+      "Five pocket styling",
+      "Zip fly with button fastening",
+      "Mid-wash denim",
+      "98% Cotton, 2% Elastane",
+    ],
+    tags: ["jeans", "denim", "wide leg", "casual"],
+    isNew: true,
   },
 ];
 
-export const categories = [
-  { id: "women", label: "WOMEN", href: "/women" },
-  { id: "men", label: "MEN", href: "/men" },
-  { id: "kids", label: "KIDS", href: "/kids" },
-  { id: "accessories", label: "ACCESSORIES", href: "/accessories" },
-  { id: "new", label: "NEW IN", href: "/new" },
-  { id: "sale", label: "SALE", href: "/sale" },
-];
+// ─── HELPER FUNCTIONS ─────────────────────────────────────────────────────────
+
+export function getProductById(id: string): Product | undefined {
+  return products.find((p) => p.id === id);
+}
 
 export function getProductsByCategory(category: string): Product[] {
   if (category === "new") return products.filter((p) => p.isNew);
@@ -281,12 +436,15 @@ export function getProductsByCategory(category: string): Product[] {
   return products.filter((p) => p.category === category);
 }
 
-export function getProductById(id: string): Product | undefined {
-  return products.find((p) => p.id === id);
+export function getRelatedProducts(product: Product, limit = 8): Product[] {
+  return products
+    .filter((p) => p.id !== product.id && (
+      p.category === product.category ||
+      p.tags.some((t) => product.tags.includes(t))
+    ))
+    .slice(0, limit);
 }
 
-export function getRelatedProducts(product: Product, limit = 4): Product[] {
-  return products
-    .filter((p) => p.id !== product.id && (p.category === product.category || p.tags.some((t) => product.tags.includes(t))))
-    .slice(0, limit);
+export function getFeaturedProducts(limit = 8): Product[] {
+  return products.slice(0, limit);
 }
