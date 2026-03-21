@@ -10,10 +10,10 @@ import Footer from "@/components/layout/Footer";
 type Step = "shipping" | "payment" | "confirmed";
 
 export default function CheckoutPage() {
-  const { state, subtotal, clearCart } = useCart();
+  const { items, totalPrice, clearCart } = useCart();
   const [step, setStep] = useState<Step>("shipping");
-  const shipping = subtotal >= 150 ? 0 : 9.95;
-  const total = subtotal + shipping;
+  const shipping = totalPrice >= 150 ? 0 : 9.95;
+  const total = totalPrice + shipping;
 
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "",
@@ -205,7 +205,7 @@ export default function CheckoutPage() {
             <div className="bg-cream p-8">
               <h2 className="font-body text-xs tracking-editorial mb-6">ORDER SUMMARY</h2>
               <div className="space-y-4 mb-6">
-                {state.items.map((item) => (
+                {items.map((item) => (
                   <div key={`${item.product.id}-${item.selectedColor}-${item.selectedSize}`} className="flex gap-3">
                     <div className="relative w-14 h-20 bg-bone flex-none overflow-hidden">
                       <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
@@ -224,7 +224,7 @@ export default function CheckoutPage() {
               <div className="border-t border-bone pt-4 space-y-2">
                 <div className="flex justify-between font-body text-sm">
                   <span className="text-stone">Subtotal</span>
-                  <span>€{subtotal.toFixed(2)}</span>
+                  <span>€{totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between font-body text-sm">
                   <span className="text-stone">Shipping</span>

@@ -7,16 +7,16 @@ import { useCart } from "@/lib/cart-context";
 import Footer from "@/components/layout/Footer";
 
 export default function CartPage() {
-  const { state, removeItem, updateQuantity, subtotal } = useCart();
-  const shipping = subtotal >= 150 ? 0 : 9.95;
-  const total = subtotal + shipping;
+  const { items, removeItem, updateQuantity, totalPrice } = useCart();
+  const shipping = totalPrice >= 150 ? 0 : 9.95;
+  const total = totalPrice + shipping;
 
   return (
     <>
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-8 pb-16 min-h-screen">
         <h1 className="font-display text-4xl lg:text-5xl font-light mb-10">Your Bag</h1>
 
-        {state.items.length === 0 ? (
+        {items.length === 0 ? (
           <div className="text-center py-24">
             <ShoppingBag size={48} strokeWidth={1} className="text-bone mx-auto mb-6" />
             <h2 className="font-display text-3xl font-light italic text-stone mb-3">Your bag is empty</h2>
@@ -29,7 +29,7 @@ export default function CartPage() {
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
             {/* Items */}
             <div className="lg:col-span-7">
-              {state.items.map((item, i) => (
+              {items.map((item, i) => (
                 <motion.div
                   key={`${item.product.id}-${item.selectedColor}-${item.selectedSize}`}
                   initial={{ opacity: 0, y: 10 }}
@@ -50,17 +50,17 @@ export default function CartPage() {
                           {item.selectedColor} · Size {item.selectedSize}
                         </p>
                       </div>
-                      <button onClick={() => removeItem(item.product.id, item.selectedColor, item.selectedSize)} className="text-stone hover:text-charcoal flex-none">
+                      <button onClick={() => removeItem(item.product.id)} className="text-stone hover:text-charcoal flex-none">
                         <X size={16} strokeWidth={1.5} />
                       </button>
                     </div>
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex items-center border border-bone">
-                        <button onClick={() => updateQuantity(item.product.id, item.selectedColor, item.selectedSize, Math.max(1, item.quantity - 1))} className="px-3 py-2 hover:bg-bone">
+                        <button onClick={() => updateQuantity(item.product.id, Math.max(1, item.quantity - 1))} className="px-3 py-2 hover:bg-bone">
                           <Minus size={12} />
                         </button>
                         <span className="w-10 text-center font-body text-sm">{item.quantity}</span>
-                        <button onClick={() => updateQuantity(item.product.id, item.selectedColor, item.selectedSize, item.quantity + 1)} className="px-3 py-2 hover:bg-bone">
+                        <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)} className="px-3 py-2 hover:bg-bone">
                           <Plus size={12} />
                         </button>
                       </div>
@@ -78,15 +78,15 @@ export default function CartPage() {
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between font-body text-sm">
                     <span className="text-stone">Subtotal</span>
-                    <span>€{subtotal.toFixed(2)}</span>
+                    <span>€{totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-body text-sm">
                     <span className="text-stone">Shipping</span>
                     <span>{shipping === 0 ? "FREE" : `€${shipping.toFixed(2)}`}</span>
                   </div>
-                  {subtotal < 150 && (
+                  {totalPrice < 150 && (
                     <p className="font-body text-xs text-stone">
-                      Add €{(150 - subtotal).toFixed(2)} more for free shipping
+                      Add €{(150 - totalPrice).toFixed(2)} more for free shipping
                     </p>
                   )}
                 </div>
