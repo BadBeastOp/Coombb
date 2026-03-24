@@ -233,7 +233,7 @@ function HeaderSearch() {
         ? products.filter((p) => p.name.toLowerCase().includes(query.toLowerCase()) ||
             p.tags.some((t) => t.toLowerCase().includes(query.toLowerCase()))).slice(0, 6)
         : [];
-    const suggestions = ["dresses", "jeans", "blazer", "shoes", "sale"];
+    const suggestions = ["dresses", "jeans", "blaaza", "shoes", "sale"];
     useEffect(() => {
         const handler = (e) => {
             if (wrapRef.current && !wrapRef.current.contains(e.target))
