@@ -1,0 +1,68 @@
+"use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Minus } from "lucide-react";
+export default function ProductAccordion({ product }) {
+    const [open, setOpen] = useState("details");
+    const toggle = (id) => setOpen(open === id ? null : id);
+    const sections = [
+        {
+            id: "details",
+            label: "Product Details",
+            content: (<ul className="space-y-2">
+          {product.details.map((d, i) => (<li key={i} className="flex items-start gap-2.5 font-body text-[13px] text-gray-600">
+              <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-none"/>
+              {d}
+            </li>))}
+        </ul>),
+        },
+        {
+            id: "delivery",
+            label: "Delivery & Returns",
+            content: (<div className="space-y-3 font-body text-[13px] text-gray-600">
+          <div>
+            <p className="font-semibold text-charcoal mb-1">Standard Delivery — Free over €50</p>
+            <p>3–5 working days. Orders placed before 10PM ship same day.</p>
+          </div>
+          <div>
+            <p className="font-semibold text-charcoal mb-1">Next Day Delivery — €5.99</p>
+            <p>Order before 10PM for next working day delivery.</p>
+          </div>
+          <div>
+            <p className="font-semibold text-charcoal mb-1">Free Returns</p>
+            <p>Return within 28 days for a full refund. Items must be unworn with tags attached.</p>
+          </div>
+        </div>),
+        },
+        {
+            id: "care",
+            label: "Care Instructions",
+            content: (<div className="space-y-2 font-body text-[13px] text-gray-600">
+          <p>To keep this piece looking its best:</p>
+          <ul className="space-y-1.5 mt-2">
+            {["Machine wash at 30°C", "Do not tumble dry", "Cool iron if needed", "Do not bleach", "Dry clean if required"].map((c) => (<li key={c} className="flex items-center gap-2">
+                <span className="w-1 h-1 bg-gray-400 rounded-full flex-none"/>
+                {c}
+              </li>))}
+          </ul>
+        </div>),
+        },
+    ];
+    return (<div className="border-t border-gray-100">
+      {sections.map((section) => (<div key={section.id} className="border-b border-gray-100">
+          <button onClick={() => toggle(section.id)} className="flex items-center justify-between w-full py-3.5 text-left group">
+            <span className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-charcoal group-hover:text-gray-600 transition-colors">
+              {section.label}
+            </span>
+            {open === section.id
+                ? <Minus size={14} strokeWidth={2} className="text-gray-400 flex-none"/>
+                : <Plus size={14} strokeWidth={2} className="text-gray-400 flex-none"/>}
+          </button>
+          <AnimatePresence initial={false}>
+            {open === section.id && (<motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.22 }} className="overflow-hidden">
+                <div className="pb-4">{section.content}</div>
+              </motion.div>)}
+          </AnimatePresence>
+        </div>))}
+    </div>);
+}

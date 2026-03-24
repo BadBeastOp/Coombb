@@ -17,7 +17,7 @@ A full-featured, production-ready luxury fashion e-commerce website built with N
 ## ✦ Tech Stack
 
 - **Next.js 14** (App Router)
-- **TypeScript**
+- **JavaScript**
 - **Tailwind CSS**
 - **Framer Motion**
 - **Lucide React** icons
@@ -40,42 +40,42 @@ Open [http://localhost:3000](http://localhost:3000)
 ```
 maison/
 ├── app/
-│   ├── layout.tsx          # Root layout with fonts & providers
-│   ├── page.tsx            # Homepage
+│   ├── layout\.jsx          # Root layout with fonts & providers
+│   ├── page\.jsx            # Homepage
 │   ├── globals.css
-│   ├── women/page.tsx
-│   ├── men/page.tsx
-│   ├── kids/page.tsx
-│   ├── accessories/page.tsx
-│   ├── new/page.tsx
-│   ├── sale/page.tsx
-│   ├── product/[id]/page.tsx
-│   ├── cart/page.tsx
-│   ├── checkout/page.tsx
-│   ├── wishlist/page.tsx
-│   └── account/page.tsx
+│   ├── women/page\.jsx
+│   ├── men/page\.jsx
+│   ├── kids/page\.jsx
+│   ├── accessories/page\.jsx
+│   ├── new/page\.jsx
+│   ├── sale/page\.jsx
+│   ├── product/[id]/page\.jsx
+│   ├── cart/page\.jsx
+│   ├── checkout/page\.jsx
+│   ├── wishlist/page\.jsx
+│   └── account/page\.jsx
 ├── components/
 │   ├── layout/
-│   │   ├── Navbar.tsx      # Sticky nav with mobile drawer
-│   │   └── Footer.tsx      # Footer with newsletter
+│   │   ├── Navbar\.jsx      # Sticky nav with mobile drawer
+│   │   └── Footer\.jsx      # Footer with newsletter
 │   ├── home/
-│   │   ├── Hero.tsx        # Full-screen hero section
-│   │   ├── CategoryGrid.tsx
-│   │   ├── FeaturedProducts.tsx  # Horizontal scroll
-│   │   └── Editorial.tsx   # Magazine-style layouts
+│   │   ├── Hero\.jsx        # Full-screen hero section
+│   │   ├── CategoryGrid\.jsx
+│   │   ├── FeaturedProducts\.jsx  # Horizontal scroll
+│   │   └── Editorial\.jsx   # Magazine-style layouts
 │   ├── product/
-│   │   ├── ProductCard.tsx # Card with hover image swap
-│   │   ├── ProductDetail.tsx # Full detail with zoom
-│   │   ├── ProductGrid.tsx # Listing with filters
-│   │   └── ProductFilters.tsx
+│   │   ├── ProductCard\.jsx # Card with hover image swap
+│   │   ├── ProductDetail\.jsx # Full detail with zoom
+│   │   ├── ProductGrid\.jsx # Listing with filters
+│   │   └── ProductFilters\.jsx
 │   ├── cart/
-│   │   └── CartDrawer.tsx  # Slide-in cart panel
+│   │   └── CartDrawer\.jsx  # Slide-in cart panel
 │   └── ui/
-│       └── SearchModal.tsx # Live search overlay
+│       └── SearchModal\.jsx # Live search overlay
 ├── lib/
-│   ├── data.ts             # 12 sample products + helpers
-│   ├── cart-context.tsx    # Cart state management
-│   └── wishlist-context.tsx
+│   ├── data.js             # 12 sample products + helpers
+│   ├── cart-context\.jsx    # Cart state management
+│   └── wishlist-context\.jsx
 └── public/
 ```
 
@@ -95,10 +95,10 @@ maison/
 
 ## ✦ Customization
 
-**Add products** — Edit `lib/data.ts` to add/modify products.
+**Add products** — Edit `lib/data.js` to add/modify products.
 
-**Change colors** — Edit `tailwind.config.ts` and `globals.css` CSS variables.
+**Change colors** — Edit `tailwind.config.js` and `globals.css` CSS variables.
 
-**Replace images** — Swap Unsplash URLs in `lib/data.ts` with your own CDN images.
+**Replace images** — Swap Unsplash URLs in `lib/data.js` with your own CDN images.
 
-**Add payment** — Integrate Stripe by replacing the mock form in `app/checkout/page.tsx`.
+**Add payment** — Integrate Stripe by replacing the mock form in `app/checkout/page\.jsx`.
