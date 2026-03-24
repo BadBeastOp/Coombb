@@ -9,6 +9,7 @@ import { useCart } from "lib/cart-context";
 import { useWishlist } from "lib/wishlist-context";
 import { products } from "lib/data";
 import { fetchSheetRows } from "lib/google-sheet-api";
+import { getMenu } from "../../services/api/menu";
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 const TOP_PROMOS = [
     { id: 1, text: "Spring Deals — Up To 30% Off Everything!", href: "/sale" },
@@ -462,20 +463,25 @@ export default function Navbar() {
         return () => { document.body.style.overflow = ""; };
     }, [mobileOpen]);
     useEffect(() => {
-        const controller = new AbortController();
-        const loadMenu = async () => {
-            try {
-                const rows = await fetchSheetRows({ signal: controller.signal });
-                const mapped = mapSheetRowsToNavItems(rows);
-                if (mapped)
-                    setNavItems(mapped);
-            }
-            catch (_err) {
-                // Keep fallback menu when sheet API is unreachable.
-            }
-        };
-        loadMenu();
-        return () => controller.abort();
+      const controller = new AbortController();
+
+      const loadMenu = async () => {
+        const data = await getMenu(controller.signal);
+        console.log("data", data);
+        debugger
+
+        if (!data) return; // ⛔ no data → don't show
+
+        const mapped = mapApiMenuToNavItems(data.data);
+
+        if (mapped && mapped.length > 0) {
+          setNavItems(mapped);
+        }
+      };
+
+      loadMenu();
+
+      return () => controller.abort();
     }, []);
     const handleEnter = useCallback((label) => {
         if (leaveTimer.current)
