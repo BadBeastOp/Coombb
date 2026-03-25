@@ -5,6 +5,8 @@ import { SlidersHorizontal, X, ChevronDown } from "lucide-react";
 import ProductCard from "./ProductCard";
 import ProductFilters, { FilterState } from "./ProductFilters";
 export default function ProductGrid({ products, title }) {
+  console.log(products, title);
+  debugger;
     const [filters, setFilters] = useState({
         sizes: [], colors: [], minPrice: 0, maxPrice: 1000,
     });

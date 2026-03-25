@@ -1,35 +1,58 @@
 "use client";
+import { useState } from "react";
 import Link from "lib/Link";
 import ProductGallery from "./ProductGallery";
 import ProductInfo from "./ProductInfo";
 import ProductRelated from "./ProductRelated";
+
 export default function ProductDetailPage({ product, related }) {
-    return (<div className="bg-white min-h-screen">
+
+  // ✅ MOVE STATE HERE
+  const [selectedColor, setSelectedColor] = useState(
+    product?.variants?.[0]?.color_name || null
+  );
+
+  return (
+    <div className="bg-white min-h-screen">
+
       {/* Breadcrumb */}
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-2">
-        <nav className="flex items-center gap-1.5 font-body text-[11px] text-gray-400">
-          <Link href="/" className="hover:text-charcoal transition-colors">Home</Link>
+        <nav className="flex items-center gap-1.5 text-[11px] text-gray-400">
+          <Link href="/">Home</Link>
           <span>/</span>
-          <Link href={`/${product.category}`} className="hover:text-charcoal transition-colors capitalize">
+          <Link href={`/${product.category}`} className="capitalize">
             {product.category}
           </Link>
           <span>/</span>
-          <span className="text-charcoal line-clamp-1">{product.name}</span>
+          <span className="text-black line-clamp-1">
+            {product.name}
+          </span>
         </nav>
       </div>
 
-      {/* Main content — gallery left, info right */}
+      {/* MAIN */}
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 xl:gap-14">
-          {/* Left — image gallery */}
-          <ProductGallery product={product}/>
 
-          {/* Right — product info */}
-          <ProductInfo product={product}/>
+          {/* ✅ PASS COLOR */}
+          <ProductGallery 
+            product={product}
+            selectedColor={selectedColor}
+          />
+
+          {/* ✅ PASS BOTH */}
+          <ProductInfo 
+            product={product}
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
+          />
+
         </div>
       </div>
 
-      {/* Related products */}
-      {related.length > 0 && <ProductRelated products={related}/>}
-    </div>);
+      {related.length > 0 && (
+        <ProductRelated products={related}/>
+      )}
+    </div>
+  );
 }
