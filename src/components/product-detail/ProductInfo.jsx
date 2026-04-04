@@ -3,7 +3,8 @@ import { useState, useMemo, useEffect } from "react";
 import { Heart, Share2, Truck, RotateCcw, ShieldCheck } from "lucide-react";
 import ProductSizeSelector from "./ProductSizeSelector";
 import ProductAccordion from "./ProductAccordion";
-import { addToCart, toggleWishlist } from "services/api/cart";
+import { addToCart, addWishlist } from "services/api/cart";
+import Swal from "sweetalert2";
 
 export default function ProductInfo({ 
   product, 
@@ -69,14 +70,27 @@ export default function ProductInfo({
 
   /* ================= ADD TO CART ================= */
   const handleAddToBag = async () => {
+    console.log("dbfgjdfnjgndfjngjfdnjnfj");
+
     if (!selectedSize) {
+      Swal.fire({
+        icon: "warning",
+        title: "Size Required",
+        text: "Please select a size before adding to bag.",
+        confirmButtonColor: "#333",
+      });
+
       setSizeError(true);
       setTimeout(() => setSizeError(false), 2500);
       return;
     }
 
     if (!selectedVariant) {
-      alert("This variant is not available.");
+      Swal.fire({
+        icon: "error",
+        title: "Variant Not Available",
+        text: "This variant is not available.",
+      });
       return;
     }
 
@@ -88,35 +102,115 @@ export default function ProductInfo({
     };
 
     try {
+      console.log("srjfdubdjf");
+
       const res = await addToCart(payload);
 
       if (!res || !res.status) {
         console.error("Add to cart failed:", res);
-        alert(res?.message || "Failed to add to cart");
+
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: res?.message || "Failed to add to cart",
+        });
+
         return;
       }
 
+      // ✅ SUCCESS ALERT
+      Swal.fire({
+        icon: "success",
+        title: "Added to Bag 🛍️",
+        text: "Product added successfully!",
+        timer: 1800,
+        showConfirmButton: false,
+      });
+
       setAdded(true);
       setTimeout(() => setAdded(false), 2500);
+
     } catch (err) {
       console.error("Error adding to cart:", err);
-      alert("Something went wrong, please try again.");
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong, please try again.",
+      });
     }
   };
 
   /* ================= WISHLIST ================= */
   const handleWishlist = async () => {
-    try {
-      const res = await toggleWishlist(product.id);
 
-      if (!res || !res.status) {
+    if (!selectedSize) {
+      Swal.fire({
+        icon: "warning",
+        title: "Size Required",
+        text: "Please select a size before adding to bag.",
+        confirmButtonColor: "#333",
+      });
+
+      setSizeError(true);
+      setTimeout(() => setSizeError(false), 2500);
+      return;
+    }
+
+    if (!selectedVariant) {
+      Swal.fire({
+        icon: "error",
+        title: "Variant Not Available",
+        text: "This variant is not available.",
+      });
+      return;
+    }
+
+    const payload = {
+      product_id: product.id,
+      color_id: selectedVariant.color_id,
+      size_id: selectedVariant.size_id,
+      quantity,
+    };
+    try {
+      const res = await addWishlist(payload);
+      console.log("jhfcjkgndkjfnj", res);
+      debugger
+
+      if (!res || !res.success) {
         console.error("Wishlist toggle failed:", res);
+
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: res?.message || "Unable to update wishlist",
+        });
+
         return;
       }
 
-      setWishlisted(!wishlisted);
+      const newState = !wishlisted;
+      setWishlisted(newState);
+
+      // ✅ SUCCESS FEEDBACK (Toast style 🔥)
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: newState ? "Added to Wishlist ❤️" : "Removed from Wishlist 💔",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
+
     } catch (err) {
       console.error("Error toggling wishlist:", err);
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong, please try again.",
+      });
     }
   };
 
@@ -187,11 +281,27 @@ export default function ProductInfo({
         />
 
         {/* QTY */}
-        <div className="flex gap-2">
-          <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
-          <span>{quantity}</span>
-          <button onClick={() => setQuantity(q => q + 1)}>+</button>
-        </div>
+<div className="flex items-center gap-3 bg-gray-100 rounded-full px-3 py-1 w-fit shadow-sm">
+  
+  <button
+    onClick={() => setQuantity(q => Math.max(1, q - 1))}
+    className="w-8 h-8 rounded-full bg-white shadow flex items-center justify-center hover:bg-gray-200 transition"
+  >
+    -
+  </button>
+
+  <span className="min-w-[24px] text-center font-medium">
+    {quantity}
+  </span>
+
+  <button
+    onClick={() => setQuantity(q => q + 1)}
+    className="w-8 h-8 rounded-full bg-white shadow flex items-center justify-center hover:bg-gray-200 transition"
+  >
+    +
+  </button>
+
+</div>
 
         {/* ACTIONS */}
         <div className="flex gap-2">
@@ -202,11 +312,14 @@ export default function ProductInfo({
             {added ? "✓ ADDED" : "ADD TO BAG"}
           </button>
 
-          <button onClick={handleWishlist} className="w-12 h-12 border">
+          <button
+            onClick={handleWishlist}
+            className="w-12 h-12 border flex items-center justify-center"
+          >
             <Heart fill={wishlisted ? "black" : "none"} />
           </button>
 
-          <button className="w-12 h-12 border">
+          <button className="w-12 h-12 border flex items-center justify-center">
             <Share2 />
           </button>
         </div>

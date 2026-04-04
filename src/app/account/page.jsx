@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Footer from "components/layout/Footer";
 import { loginUser, registerUser } from "services/api/account";
 
 export default function AccountPage() {
@@ -27,14 +26,14 @@ export default function AccountPage() {
         return;
       }
 
-      console.log("resss", res);
+      console.log("resss", res, res.token);
       debugger;
 
       setSuccess("Login successful!");
-      console.log("Logged in user:", res.data);
+      console.log("Logged in user:", res.token);
 
       // Store token if needed
-      // localStorage.setItem("token", res.data.token);
+      localStorage.setItem("authToken", res.token);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -170,7 +169,6 @@ export default function AccountPage() {
           </form>
         </motion.div>
       </div>
-      <Footer />
     </>
   );
 }

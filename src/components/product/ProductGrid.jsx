@@ -14,17 +14,50 @@ export default function ProductGrid({ products, title }) {
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [sortOpen, setSortOpen] = useState(false);
     const filtered = useMemo(() => {
-        let list = [...products];
-        if (filters.sizes.length > 0)
-            list = list.filter((p) => p.sizes.some((s) => filters.sizes.includes(s)));
-        if (filters.colors.length > 0)
-            list = list.filter((p) => p.colors.some((c) => filters.colors.includes(c.name)));
-        list = list.filter((p) => p.price >= filters.minPrice && p.price <= filters.maxPrice);
-        if (sort === "price-asc")
-            list.sort((a, b) => a.price - b.price);
-        if (sort === "price-desc")
-            list.sort((a, b) => b.price - a.price);
-        return list;
+      let list = [...products];
+
+      // SIZE
+      if (filters.sizes.length > 0) {
+        list = list.filter((p) =>
+          p.variants.some((v) => filters.sizes.includes(v.size.name))
+        );
+      }
+
+      // COLOR
+      if (filters.colors.length > 0) {
+        list = list.filter((p) =>
+          p.variants.some((v) => filters.colors.includes(v.color.name))
+        );
+      }
+
+      // PRICE FILTER
+      list = list.filter((p) => {
+        const price = Number(p.selling_price || p.cost_price);
+        return price >= filters.minPrice && price <= filters.maxPrice;
+      });
+
+      // SORT
+      if (sort === "newest") {
+        list.sort((a, b) => b.id - a.id);
+      }
+
+      if (sort === "price-asc") {
+        list.sort(
+          (a, b) =>
+            Number(a.selling_price || a.cost_price) -
+            Number(b.selling_price || b.cost_price)
+        );
+      }
+
+      if (sort === "price-desc") {
+        list.sort(
+          (a, b) =>
+            Number(b.selling_price || b.cost_price) -
+            Number(a.selling_price || a.cost_price)
+        );
+      }
+
+      return list;
     }, [products, filters, sort]);
     const sortLabels = {
         newest: "NEWEST",
@@ -35,7 +68,7 @@ export default function ProductGrid({ products, title }) {
       {/* Header */}
       <div className="mb-6 sm:mb-8 flex flex-col xs:flex-row xs:items-end xs:justify-between gap-3">
         <div>
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-light">{title}</h1>
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl capitalize font-light">{title}</h1>
           <p className="font-body text-xs text-stone mt-1.5">{filtered.length} ITEMS</p>
         </div>
         <div className="flex items-center gap-3 flex-none">
@@ -61,10 +94,6 @@ export default function ProductGrid({ products, title }) {
       </div>
 
       <div className="flex gap-8 lg:gap-10 items-start">
-        {/* Desktop sidebar — sticky */}
-        <aside className="hidden lg:block w-52 flex-none sticky top-28">
-          <ProductFilters filters={filters} onChange={setFilters}/>
-        </aside>
 
         {/* Mobile filter drawer */}
         <AnimatePresence>

@@ -3,6 +3,7 @@ import { CartProvider } from "lib/cart-context";
 import { WishlistProvider } from "lib/wishlist-context";
 
 import Navbar from "components/layout/Navbar";
+import Footer from "components/layout/Footer";
 import CartDrawer from "components/cart/CartDrawer";
 
 import HomePage from "app/page";
@@ -19,6 +20,7 @@ import CheckoutPage from "app/checkout/page";
 import WishlistPage from "app/wishlist/page";
 import ProductPage from "app/product/[slug]/page";
 import CategoryPage from "app/women/page";
+import SubCategoryPage from "app/womenCategory/page";
 import NotFoundPage from "app/not-found";
 
 function getView(pathname) {
@@ -44,6 +46,15 @@ function getView(pathname) {
     return {
       title: `${slug} - Coombb`,
       view: <CategoryPage slug={slug} />,
+    };
+  }
+  // ✅ Dynamic Category
+  if (pathname.startsWith("/product-category/")) {
+    const slug = pathname.split("/")[2];
+
+    return {
+      title: `${slug} - Coombb`,
+      view: <SubCategoryPage slug={slug} />,
     };
   }
 
@@ -123,6 +134,7 @@ export default function App() {
         <Navbar />
         <CartDrawer />
         <main className="page-content">{current.view}</main>
+        <Footer />
       </WishlistProvider>
     </CartProvider>
   );

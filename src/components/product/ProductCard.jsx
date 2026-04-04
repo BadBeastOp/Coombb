@@ -33,13 +33,13 @@ export default function ProductCard({ product, priority }) {
 
   return (
     <div
-      className="group relative flex flex-col"
+      className="group relative flex flex-col cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Image container */}
       <Link
-        href={`/product/${product?.id}`}
+        href={`/product/${product?.slug}`}
         className="block relative overflow-hidden bg-bone w-full"
         style={{ aspectRatio: "3/4" }}
       >
@@ -96,7 +96,7 @@ export default function ProductCard({ product, priority }) {
         >
           <Heart
             size={14}
-            strokeWidth={1.5}
+            strokeWidth={2}
             className={`transition-colors ${
               wishlisted
                 ? "fill-charcoal text-charcoal"

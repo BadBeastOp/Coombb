@@ -6,7 +6,7 @@ export const loginUser = async ({ email, password }) => {
     const response = await API.post("/login", {
       username: email,  // or "email" if your API expects
       password,
-      user_type: "User",
+      user_type: "Admin",
       login_type: "email",
     });
 

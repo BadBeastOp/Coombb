@@ -140,6 +140,7 @@ const NAV_ITEMS = [
 const DEFAULT_MENU_ROUTE_BY_SLUG = {
     men: "/men",
     women: "/women",
+    cricket: "/cricket",
     accessories: "/accessories",
 };
 function resolveMenuHref(slug) {
@@ -148,21 +149,37 @@ function resolveMenuHref(slug) {
     return DEFAULT_MENU_ROUTE_BY_SLUG[slug] || "/new";
 }
 function mapApiMenuToNavItems(menuData) {
-    if (!Array.isArray(menuData) || menuData.length === 0)
-        return null;
-    const mapped = menuData.map((category) => ({
-        label: category.name || "",
-        href: resolveMenuHref(category.slug),
-        sale: (category.slug || "").toLowerCase() === "sale",
-        hot: false,
-        columns: Array.isArray(category.subcategories)
-            ? category.subcategories.map((sub) => ({
-                title: sub.name || "Category",
-                links: Array.isArray(sub.children) ? sub.children.map((child) => child.name).filter(Boolean) : [],
-            }))
-            : [],
-    })).filter((item) => item.label && item.href);
-    return mapped.length > 0 ? mapped : null;
+  if (!Array.isArray(menuData) || menuData.length === 0) return null;
+
+  const mapped = menuData
+    .map((category) => ({
+      label: category.name || "",
+      href: `/category${resolveMenuHref(category.slug)}`,
+      sale: (category.slug || "").toLowerCase() === "sale",
+      hot: false,
+
+      columns: Array.isArray(category.subcategories)
+        ? category.subcategories.map((sub) => ({
+            title: sub.name || "Category",
+
+            // ✅ SUBCATEGORY LINK
+            href: `/category/${sub.slug}`,
+
+            // ✅ CHILD LINKS WITH HREF
+            links: Array.isArray(sub.children)
+              ? sub.children
+                  .filter((child) => child?.name && child?.slug)
+                  .map((child) => ({
+                    label: child.name,
+                    href: `/product-category/${child.slug}`, // ✅ child link
+                  }))
+              : [],
+          }))
+        : [],
+    }))
+    .filter((item) => item.label && item.href);
+
+  return mapped.length > 0 ? mapped : null;
 }
 function pickValue(row, keys) {
     const entries = Object.entries(row);
@@ -227,13 +244,55 @@ function TopPromoBar() {
 function HeaderSearch() {
     const [query, setQuery] = useState("");
     const [focused, setFocused] = useState(false);
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(-1); // ✅ NEW
+
     const inputRef = useRef(null);
     const wrapRef = useRef(null);
-    const results = query.length > 1
-        ? products.filter((p) => p.name.toLowerCase().includes(query.toLowerCase()) ||
-            p.tags.some((t) => t.toLowerCase().includes(query.toLowerCase()))).slice(0, 6)
-        : [];
+
     const suggestions = ["dresses", "jeans", "blazer", "shoes", "sale"];
+
+    // ✅ Debounced API call
+    useEffect(() => {
+        if (query.length <= 1) {
+            setResults([]);
+            return;
+        }
+
+        const delayDebounce = setTimeout(() => {
+            fetchResults(query);
+        }, 400);
+
+        return () => clearTimeout(delayDebounce);
+    }, [query]);
+
+    // ✅ Reset active index when query changes
+    useEffect(() => {
+        setActiveIndex(-1);
+    }, [query]);
+
+    // ✅ API function
+    const fetchResults = async (searchText) => {
+        try {
+            setLoading(true);
+
+            const res = await fetch(
+                `https://clothing.premierwebtechservices.com/backend/api/search?q=${searchText}`
+            );
+
+            const data = await res.json();
+            setResults(data.data || data);
+
+        } catch (err) {
+            console.error("Search error:", err);
+            setResults([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // ✅ click outside close
     useEffect(() => {
         const handler = (e) => {
             if (wrapRef.current && !wrapRef.current.contains(e.target))
@@ -242,51 +301,117 @@ function HeaderSearch() {
         document.addEventListener("mousedown", handler);
         return () => document.removeEventListener("mousedown", handler);
     }, []);
-    return (<div ref={wrapRef} className="relative w-full max-w-[600px]">
-      <div className={`flex items-center bg-[#f2f2f2] rounded-full px-4 py-2.5 gap-2 transition-all duration-200 ${focused ? "bg-white ring-2 ring-charcoal/20 shadow-sm" : "hover:bg-[#e8e8e8]"}`}>
-        <input ref={inputRef} type="text" value={query} onChange={(e) => setQuery(e.target.value)} onFocus={() => setFocused(true)} onKeyDown={(e) => e.key === "Escape" && setFocused(false)} placeholder="Search products and brands" className="flex-1 bg-transparent font-body text-sm text-charcoal placeholder:text-gray-400 focus:outline-none min-w-0"/>
-        <button title="Visual search" aria-label="Visual search" className="text-gray-400 hover:text-charcoal transition-colors flex-none" onClick={() => inputRef.current?.focus()}>
-          <Camera size={16} strokeWidth={1.5}/>
-        </button>
-        <span className="w-px h-4 bg-gray-300 flex-none"/>
-        <button aria-label="Search" className="text-charcoal hover:text-stone transition-colors flex-none" onClick={() => inputRef.current?.focus()}>
-          <Search size={17} strokeWidth={2}/>
-        </button>
-      </div>
 
-      <AnimatePresence>
-        {focused && (<motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }} transition={{ duration: 0.16 }} className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 shadow-2xl rounded-xl z-[60] overflow-hidden">
-            {query.length === 0 && (<div className="p-4">
-                <p className="font-body text-[10px] tracking-[0.2em] text-gray-400 mb-3 uppercase">Popular Searches</p>
-                <div className="flex flex-wrap gap-2">
-                  {suggestions.map((s) => (<button key={s} onClick={() => { setQuery(s); inputRef.current?.focus(); }} className="font-body text-xs px-3 py-1.5 rounded-full bg-gray-100 hover:bg-charcoal hover:text-white transition-colors capitalize">
-                      {s}
-                    </button>))}
+    return (
+        <div ref={wrapRef} className="relative w-full max-w-[600px]">
+
+            {/* INPUT */}
+            <div className={`flex items-center bg-[#f2f2f2] rounded-full px-4 py-2.5 gap-2 transition-all duration-200 ${focused ? "bg-white ring-2 ring-charcoal/20 shadow-sm" : "hover:bg-[#e8e8e8]"}`}>
+                <input
+                    ref={inputRef}
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onFocus={() => setFocused(true)}
+
+                    // ✅ KEYBOARD CONTROL
+                    onKeyDown={(e) => {
+                        if (e.key === "ArrowDown") {
+                            e.preventDefault();
+                            setActiveIndex((prev) =>
+                                prev < results.length - 1 ? prev + 1 : 0
+                            );
+                        }
+
+                        if (e.key === "ArrowUp") {
+                            e.preventDefault();
+                            setActiveIndex((prev) =>
+                                prev > 0 ? prev - 1 : results.length - 1
+                            );
+                        }
+
+                        if (e.key === "Enter" && activeIndex >= 0) {
+                            const selected = results[activeIndex];
+                            window.location.href = `/product/${selected.slug}`;
+                        }
+
+                        if (e.key === "Escape") {
+                            setFocused(false);
+                            setActiveIndex(-1);
+                        }
+                    }}
+
+                    placeholder="Search products and brands"
+                    className="flex-1 bg-transparent text-sm focus:outline-none"
+                />
+            </div>
+
+            {/* DROPDOWN */}
+            {focused && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white shadow-xl rounded-xl z-[60]">
+
+                    {/* Suggestions */}
+                    {query.length === 0 && (
+                        <div className="p-4">
+                            {suggestions.map((s) => (
+                                <button
+                                    key={s}
+                                    onClick={() => {
+                                        setQuery(s);
+                                        inputRef.current?.focus();
+                                    }}
+                                    className="mr-2 mb-2 px-3 py-1 bg-gray-100 rounded-full"
+                                >
+                                    {s}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Loading */}
+                    {loading && (
+                        <div className="p-4 text-center text-gray-400">
+                            Searching...
+                        </div>
+                    )}
+
+                    {/* Results */}
+                    {!loading && results.length > 0 && (
+                        <div>
+                            {results.slice(0, 6).map((p, index) => (
+                                <div
+                                    key={p.id}
+
+                                    // ✅ MOUSE HOVER SYNC
+                                    onMouseEnter={() => setActiveIndex(index)}
+
+                                    // ✅ CLICK REDIRECT
+                                    onClick={() => {
+                                        window.location.href = `/product/${p.slug}`;
+                                    }}
+
+                                    className={`p-3 cursor-pointer transition-colors ${
+                                        activeIndex === index
+                                            ? "bg-gray-100"
+                                            : "hover:bg-gray-50"
+                                    }`}
+                                >
+                                    {p.name}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* No Results */}
+                    {!loading && query.length > 1 && results.length === 0 && (
+                        <div className="p-4 text-center text-gray-400">
+                            No results for "{query}"
+                        </div>
+                    )}
                 </div>
-              </div>)}
-            {results.length > 0 && (<div className="divide-y divide-gray-50">
-                <p className="px-4 pt-3 pb-2 font-body text-[10px] tracking-[0.2em] text-gray-400 uppercase">
-                  {results.length} results for &ldquo;{query}&rdquo;
-                </p>
-                {results.map((p) => (<Link key={p.id} href={`/product/${p.id}`} onClick={() => setFocused(false)} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group">
-                    <div className="relative w-10 h-14 bg-bone flex-none overflow-hidden rounded">
-                      <Image src={p.images[0]} alt={p.name} fill className="object-cover"/>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-body text-xs font-medium text-charcoal group-hover:underline truncate">{p.name}</p>
-                      <p className="font-body text-sm text-stone mt-0.5">€{p.price}</p>
-                    </div>
-                    <ChevronRight size={14} className="text-gray-300 flex-none"/>
-                  </Link>))}
-              </div>)}
-            {query.length > 1 && results.length === 0 && (<div className="px-4 py-6 text-center">
-                <p className="font-body text-sm text-gray-400">
-                  No results for &ldquo;<strong className="text-charcoal">{query}</strong>&rdquo;
-                </p>
-              </div>)}
-          </motion.div>)}
-      </AnimatePresence>
-    </div>);
+            )}
+        </div>
+    );
 }
 // ─── MEGA MENU ────────────────────────────────────────────────────────────────
 function MegaMenu({ item }) {
@@ -298,11 +423,16 @@ function MegaMenu({ item }) {
                 {col.title}
               </h4>
               <ul className="space-y-2">
-                {col.links.map((link) => (<li key={link}>
-                    <Link href={item.href} className="font-body text-[13px] text-gray-600 hover:text-charcoal transition-colors hover:underline underline-offset-2">
-                      {link}
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href} // ✅ use child link
+                      className="font-body text-[13px] text-gray-600 hover:text-charcoal transition-colors hover:underline underline-offset-2"
+                    >
+                      {link.label} {/* ✅ use label */}
                     </Link>
-                  </li>))}
+                  </li>
+                ))}
               </ul>
             </div>))}
         </div>
@@ -417,10 +547,17 @@ function MobileMenu({ onClose, navItems }) {
                       {item.columns.map((col) => (<div key={col.title}>
                           <p className="font-body text-[10px] tracking-[0.2em] text-gray-400 mb-2 uppercase">{col.title}</p>
                           <div className="flex flex-col gap-1.5">
-                            {col.links.map((link) => (<Link key={link} href={item.href} onClick={onClose} className="font-body text-sm text-gray-700 hover:text-charcoal flex items-center gap-1.5">
-                                <ChevronRight size={10} className="text-gray-300 flex-none"/>
-                                {link}
-                              </Link>))}
+                            {col.links.map((link) => (
+                              <Link
+                                key={link.href}
+                                href={link.href} // ✅ use correct child link
+                                onClick={onClose}
+                                className="font-body text-sm text-gray-700 hover:text-charcoal flex items-center gap-1.5"
+                              >
+                                <ChevronRight size={10} className="text-gray-300 flex-none" />
+                                {link.label} {/* ✅ render label */}
+                              </Link>
+                            ))}
                           </div>
                         </div>))}
                       <Link href={item.href} onClick={onClose} className="inline-block font-body text-[11px] tracking-[0.15em] px-4 py-2 bg-charcoal text-white hover:bg-charcoal/80 transition-colors">
@@ -467,8 +604,6 @@ export default function Navbar() {
 
       const loadMenu = async () => {
         const data = await getMenu(controller.signal);
-        console.log("data", data);
-        debugger
 
         if (!data) return; // ⛔ no data → don't show
 

@@ -12,6 +12,28 @@ export const getCategoryBySlug = async (slug) => {
     return null;
   }
 };
+export const getSubCategoryBySlug = async (slug) => {
+  try {
+    const res = await API.get(`/subcategory/${slug}/products`);
+    // Axios response data is in res.data
+    // Assuming your API returns { status: true, data: { ... } }
+    return res.data?.data || null;
+  } catch (err) {
+    console.error("Error fetching category:", err);
+    return null;
+  }
+};
+export const getChildCategoryBySlug = async (slug) => {
+  try {
+    const res = await API.get(`/child-category/${slug}/products`);
+    // Axios response data is in res.data
+    // Assuming your API returns { status: true, data: { ... } }
+    return res.data?.data || null;
+  } catch (err) {
+    console.error("Error fetching category:", err);
+    return null;
+  }
+};
 
 // Fetch a single product by slug
 export const getProductBySlug = async (slug) => {
